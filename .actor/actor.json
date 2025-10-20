@@ -8,5 +8,9 @@
     "meta": {
         "templateId": "ts-empty"
     },
-    "dockerfile": "../Dockerfile"
+    "dockerfile": "../Dockerfile",
+    "input": "./input_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    }
 }
