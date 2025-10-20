@@ -1,0 +1,162 @@
+{
+    "actorSpecification": 1,
+    "views": [
+        {
+            "title": "Overview",
+            "description": "Complete email count overview with departmental breakdown",
+            "fields": ["domain", "total", "personal_emails", "generic_emails", "department", "seniority", "source"],
+            "displayedFields": ["domain", "total", "personal_emails", "generic_emails", "source"]
+        },
+        {
+            "title": "Domain Summary",
+            "description": "Basic email count statistics per domain",
+            "fields": ["domain", "total", "personal_emails", "generic_emails", "source"],
+            "displayedFields": ["domain", "total", "personal_emails", "generic_emails"]
+        },
+        {
+            "title": "Department Analysis",
+            "description": "Detailed breakdown of emails by department",
+            "fields": ["domain", "total", "department", "source"],
+            "displayedFields": ["domain", "total", "department"]
+        },
+        {
+            "title": "Seniority Distribution",
+            "description": "Email count breakdown by seniority levels",
+            "fields": ["domain", "total", "seniority", "source"],
+            "displayedFields": ["domain", "total", "seniority"]
+        }
+    ],
+    "fields": {
+        "type": "object",
+        "properties": {
+            "domain": {
+                "type": "string",
+                "description": "Domain name that was processed"
+            },
+            "total": {
+                "type": ["number", "null"],
+                "description": "Total number of email addresses found for the domain"
+            },
+            "personal_emails": {
+                "type": ["number", "null"],
+                "description": "Number of personal email addresses"
+            },
+            "generic_emails": {
+                "type": ["number", "null"],
+                "description": "Number of generic email addresses (info@, support@, etc.)"
+            },
+            "department": {
+                "type": ["object", "null"],
+                "description": "Email count breakdown by department",
+                "properties": {
+                    "engineering": {
+                        "type": ["number", "null"],
+                        "description": "Number of engineering emails"
+                    },
+                    "finance": {
+                        "type": ["number", "null"],
+                        "description": "Number of finance emails"
+                    },
+                    "hr": {
+                        "type": ["number", "null"],
+                        "description": "Number of HR emails"
+                    },
+                    "it": {
+                        "type": ["number", "null"],
+                        "description": "Number of IT emails"
+                    },
+                    "marketing": {
+                        "type": ["number", "null"],
+                        "description": "Number of marketing emails"
+                    },
+                    "operations": {
+                        "type": ["number", "null"],
+                        "description": "Number of operations emails"
+                    },
+                    "management": {
+                        "type": ["number", "null"],
+                        "description": "Number of management emails"
+                    },
+                    "sales": {
+                        "type": ["number", "null"],
+                        "description": "Number of sales emails"
+                    },
+                    "legal": {
+                        "type": ["number", "null"],
+                        "description": "Number of legal emails"
+                    },
+                    "support": {
+                        "type": ["number", "null"],
+                        "description": "Number of support emails"
+                    },
+                    "communication": {
+                        "type": ["number", "null"],
+                        "description": "Number of communication emails"
+                    },
+                    "executive": {
+                        "type": ["number", "null"],
+                        "description": "Number of executive emails"
+                    },
+                    "accounting": {
+                        "type": ["number", "null"],
+                        "description": "Number of accounting emails"
+                    },
+                    "administrative": {
+                        "type": ["number", "null"],
+                        "description": "Number of administrative emails"
+                    },
+                    "diversity": {
+                        "type": ["number", "null"],
+                        "description": "Number of diversity emails"
+                    },
+                    "facilities": {
+                        "type": ["number", "null"],
+                        "description": "Number of facilities emails"
+                    },
+                    "pr": {
+                        "type": ["number", "null"],
+                        "description": "Number of PR/public relations emails"
+                    },
+                    "security": {
+                        "type": ["number", "null"],
+                        "description": "Number of security emails"
+                    },
+                    "software": {
+                        "type": ["number", "null"],
+                        "description": "Number of software emails"
+                    },
+                    "warehouse": {
+                        "type": ["number", "null"],
+                        "description": "Number of warehouse emails"
+                    }
+                }
+            },
+            "seniority": {
+                "type": ["object", "null"],
+                "description": "Email count breakdown by seniority level",
+                "properties": {
+                    "junior": {
+                        "type": ["number", "null"],
+                        "description": "Number of junior level emails"
+                    },
+                    "senior": {
+                        "type": ["number", "null"],
+                        "description": "Number of senior level emails"
+                    },
+                    "executive": {
+                        "type": ["number", "null"],
+                        "description": "Number of executive level emails"
+                    }
+                }
+            },
+            "source": {
+                "type": "string",
+                "description": "Source of the count data"
+            },
+            "error": {
+                "type": "string",
+                "description": "Error message if count failed"
+            }
+        }
+    }
+}
