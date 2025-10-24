@@ -1,6 +1,6 @@
 {
     "name": "@tomba-io/email-count",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "type": "module",
     "description": "Counts email addresses for domains using the Tomba API.",
     "engines": {
