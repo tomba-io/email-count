@@ -3,7 +3,7 @@
     "name": "email-count",
     "title": "Tomba Email Count",
     "description": "Counts email addresses for domains using the Tomba API.",
-    "version": "0.1",
+    "version": "0.3",
     "buildTag": "latest",
     "meta": {
         "templateId": "ts-empty"

@@ -1,31 +1,5 @@
 {
     "actorSpecification": 1,
-    "views": [
-        {
-            "title": "Overview",
-            "description": "Complete email count overview with departmental breakdown",
-            "fields": ["domain", "total", "personal_emails", "generic_emails", "department", "seniority", "source"],
-            "displayedFields": ["domain", "total", "personal_emails", "generic_emails", "source"]
-        },
-        {
-            "title": "Domain Summary",
-            "description": "Basic email count statistics per domain",
-            "fields": ["domain", "total", "personal_emails", "generic_emails", "source"],
-            "displayedFields": ["domain", "total", "personal_emails", "generic_emails"]
-        },
-        {
-            "title": "Department Analysis",
-            "description": "Detailed breakdown of emails by department",
-            "fields": ["domain", "total", "department", "source"],
-            "displayedFields": ["domain", "total", "department"]
-        },
-        {
-            "title": "Seniority Distribution",
-            "description": "Email count breakdown by seniority levels",
-            "fields": ["domain", "total", "seniority", "source"],
-            "displayedFields": ["domain", "total", "seniority"]
-        }
-    ],
     "fields": {
         "type": "object",
         "properties": {
