@@ -10,7 +10,8 @@
             "description": "Your Tomba API key (ta_xxxx). Get it from https://app.tomba.io/api",
             "editor": "textfield",
             "isSecret": true,
-            "example": "ta_xxxxxxxxxxxxxxxxxxxx"
+            "example": "ta_xxxxxxxxxxxxxxxxxxxx",
+            "prefill": "ta_xxxxxxxxxxxxxxxxxxxx"
         },
         "tombaApiSecret": {
             "title": "Tomba Secret Key",
@@ -18,7 +19,8 @@
             "description": "Your Tomba secret key (ts_xxxx). Get it from https://app.tomba.io/api",
             "editor": "textfield",
             "isSecret": true,
-            "example": "ts_xxxxxxxxxxxxxxxxxxxx"
+            "example": "ts_xxxxxxxxxxxxxxxxxxxx",
+            "prefill": "ts_xxxxxxxxxxxxxxxxxxxx"
         },
         "domains": {
             "title": "Domains to Count",
@@ -28,7 +30,8 @@
             "items": {
                 "type": "string"
             },
-            "example": ["tomba.io", "example.com", "google.com"]
+            "example": ["tomba.io", "example.com", "google.com"],
+            "prefill": ["tomba.io", "stripe.com"]
         },
         "maxResults": {
             "title": "Maximum Results",
