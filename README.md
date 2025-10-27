@@ -166,6 +166,10 @@ The output contains comprehensive email statistics organized into logical sectio
 - [Pricing & Limits](https://tomba.io/pricing) - Understand rate limits and costs
 - [Email Count API](https://docs.tomba.io/api/finder#email-count) - Specific endpoint documentation
 
+## Keywords
+
+email count, email analytics, domain email statistics, email volume analysis, company email insights, email metrics, business intelligence, email data analysis, corporate email count, domain analysis
+
 ## Support
 
 If you need any help, have questions, or encounter any issues while using Tomba.io, please don't hesitate to reach out to our support team. You can contact us via:
