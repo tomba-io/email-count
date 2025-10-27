@@ -1,0 +1,14 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Email Count Output",
+    "description": "Output from Tomba Email Count Actor - email volume analysis and statistics by domain",
+    "type": "object",
+    "properties": {
+        "results": {
+            "type": "string",
+            "title": "Email Count Results",
+            "description": "Email volume statistics with department and seniority breakdowns",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
+        }
+    }
+}
