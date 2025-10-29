@@ -166,6 +166,75 @@ The output contains comprehensive email statistics organized into logical sectio
 - [Pricing & Limits](https://tomba.io/pricing) - Understand rate limits and costs
 - [Email Count API](https://docs.tomba.io/api/finder#email-count) - Specific endpoint documentation
 
+## FAQ
+
+### General Questions
+
+**Q: What does email count analysis provide?**
+A: Email count analysis tells you how many email addresses are associated with a domain, broken down by department, seniority, and other attributes. It's like getting domain email statistics without seeing actual email addresses.
+
+**Q: Why would I need to count emails instead of finding them?**
+A: Email counting helps with market sizing, campaign planning, lead qualification, and understanding company structure without the cost of retrieving individual email addresses.
+
+**Q: How accurate are the email counts?**
+A: Counts are based on Tomba's comprehensive database and are typically accurate within 10-20%. Large companies may have more variance due to complex email structures.
+
+### Usage & Features
+
+**Q: Can I get counts for specific departments?**
+A: Yes! Results include breakdowns by department (sales, engineering, marketing, etc.), seniority levels, and job functions when available.
+
+**Q: What's the difference between total and verified email counts?**
+A: Total count includes all discovered emails, while verified count only includes emails that have been validated for deliverability.
+
+**Q: How many domains can I analyze at once?**
+A: You can process up to 1000 domains per run. For optimal performance, analyze 20-50 domains per batch.
+
+**Q: Do you provide historical email count data?**
+A: The current API provides point-in-time data. For trend analysis, you'd need to run periodic counts and track changes over time.
+
+### Technical Questions
+
+**Q: What are the rate limits for email counting?**
+A: The Actor automatically handles Tomba's rate limits. Email counting is typically faster than individual email discovery operations.
+
+**Q: How should I interpret zero email counts?**
+A: Zero counts might indicate new companies, very private organizations, domains with no public email presence, or domains outside Tomba's coverage area.
+
+**Q: Can I count emails for any domain?**
+A: You can analyze most business domains. Personal email providers (gmail.com, yahoo.com) won't return meaningful counts since they don't represent single organizations.
+
+**Q: What happens if a domain doesn't exist?**
+A: Invalid domains will return an error or zero count. The Actor handles these gracefully and continues processing other domains.
+
+### Business Applications
+
+**Q: How can this help with sales planning?**
+A: Email counts help estimate market size, plan outreach capacity, prioritize target companies by size, and set realistic campaign goals.
+
+**Q: Is this useful for competitive analysis?**
+A: Yes! Compare email counts across competitors to understand relative company sizes, growth patterns, and market positioning.
+
+**Q: How does this help with lead qualification?**
+A: Companies with larger email counts typically indicate bigger organizations, which might be more valuable prospects depending on your business model.
+
+**Q: Can I use this for market research?**
+A: Absolutely! Aggregate email counts across industry domains to understand market characteristics, company size distributions, and sector insights.
+
+### Data & Privacy
+
+**Q: Does email counting violate privacy?**
+A: No, email counting only provides aggregate statistics without revealing individual email addresses or personal information.
+
+**Q: Is this GDPR compliant?**
+A: Yes, email counting uses only aggregated, publicly available information and doesn't expose personal data.
+
+**Q: How often is the count data updated?**
+A: Tomba regularly updates its database. While specific update frequencies aren't guaranteed, data is generally refreshed monthly or quarterly.
+
+**Q: Can I track email count changes over time?**
+A: You can run periodic analyses to track changes. Consider storing historical results to build trend analysis for your target domains.
+
 ## Keywords
 
 email count, email analytics, domain email statistics, email volume analysis, company email insights, email metrics, business intelligence, email data analysis, corporate email count, domain analysis
