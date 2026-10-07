@@ -1,257 +1,169 @@
-# Tomba Email-Count Actor
+# Tomba Email Count
 
-[![Actor](https://img.shields.io/badge/Apify-Actor-blue)](https://apify.com/actors)
-[![Tomba API](https://img.shields.io/badge/Tomba-API-green)](https://tomba.io)
-[![Rate Limit](https://img.shields.io/badge/Rate%20Limit-150%2Fmin-orange)](https://tomba.io/api)
+[![Price](https://img.shields.io/badge/Price-%243.12%20per%201K%20domains-brightgreen)](#pricing)
+[![No signup](https://img.shields.io/badge/Tomba%20account-not%20needed-blue)](#quick-start)
+[![No rate limit](https://img.shields.io/badge/Rate%20limit-none-brightgreen)](#built-for-big-lists)
 
-A powerful Apify Actor that counts email addresses for domains using the **Tomba Email Count API**. Perfect for sales teams, marketers, and researchers who need to understand the email landscape of target companies for lead generation planning, market sizing, and competitive analysis.
+**See how many contacts you can reach at any company before you spend a cent on outreach.** Paste a list of domains and get the number of email addresses Tomba knows for each one, split into personal and generic addresses, by department and by seniority.
 
-## Key Features
+No Tomba account. No API key. No subscription. **You pay $0.00312 per domain, and only when we return a count.**
 
-- **Email Counting**: Get accurate email count statistics for any domain
-- **Departmental Breakdown**: Email counts by department (sales, engineering, marketing, etc.)
-- **Seniority Analysis**: Email distribution by seniority levels (junior, senior, executive)
-- **Quality Metrics**: Confidence levels and data freshness indicators
-- **Rate Limited**: Respects Tomba's 150 requests per minute limit
-- **Bulk Processing**: Process multiple domains efficiently
-- **Error Handling**: Robust error handling with detailed logging
+## Why teams choose this Actor
 
-## How it works
+- **Start in 30 seconds**: Open the Actor, paste your domains, click Start. Nothing to sign up for
+- **Pay only for results**: Errors and invalid inputs are free
+- **$3.12 per 1,000 domains**: No monthly plan, no credits that expire, no minimum spend
+- **More than a number**: Personal vs. generic addresses, plus a breakdown by department and seniority
+- **Built for big lists**: No rate limit. Thousands of domains run in parallel
+- **Never pay twice**: Domains you looked up in the last 24 hours come back from cache for free
+- **Clean input, clean output**: Paste URLs or domains in any format; duplicates are removed automatically
+- **Export anywhere**: Download as CSV, Excel or JSON, or send results straight to your CRM with Apify integrations
 
-The Actor leverages Tomba's powerful Email Count API to gather comprehensive email statistics:
+## What you can do with it
 
-### Process Flow
+| Goal                      | How email counts help                                                |
+| ------------------------- | -------------------------------------------------------------------- |
+| **Prioritize accounts**   | Focus on the companies where you can reach the most people           |
+| **Plan campaigns**        | Estimate how many contacts a list of companies will give you         |
+| **Target the right team** | See how many contacts work in sales, marketing, engineering and more |
+| **Reach decision makers** | Check how many senior and executive contacts each company has        |
+| **Size a market**         | Compare the reachable audience across an industry or region          |
 
-1. **Authentication**: Connects to Tomba API using your credentials
-2. **Domain Processing**: Accepts array of domains to analyze
-3. **Count Analysis**: Retrieves detailed email statistics for each domain
-4. **Rate Limiting**: Automatically handles 150 requests/minute limit
-5. **Data Storage**: Saves results to Apify dataset
+## Quick start
 
-### What You Get
+1. Click **Try for free**
+2. Paste your domains into **Domains to Count** (for example `stripe.com`, `shopify.com`)
+3. Click **Start**, then download your results as CSV, Excel or JSON
 
-For each domain, you'll receive:
+That's it. No Tomba account or API key is needed.
 
-- **Total Email Count**: Complete number of email addresses found
-- **Email Type Breakdown**: Personal vs generic email distribution
-- **Department Statistics**: Email counts by department (engineering, sales, marketing, etc.)
-- **Seniority Distribution**: Email counts by job level (junior, senior, executive)
-- **Quality Indicators**: Confidence levels and data freshness
-- **Organization Context**: Basic company information for context
+## Input
 
-## Quick Start
-
-### Prerequisites
-
-1. **Tomba Account**: Sign up at [Tomba.io](https://app.tomba.io/api) to get your API credentials
-
-### Getting Your API Keys
-
-1. Visit [Tomba API Dashboard](https://app.tomba.io/api)
-2. Copy your **API Key** (starts with `ta_`)
-3. Copy your **Secret Key** (starts with `ts_`)
-
-## Input Configuration
-
-### Required Parameters
-
-| Parameter        | Type     | Description                     |
-| ---------------- | -------- | ------------------------------- |
-| `tombaApiKey`    | `string` | Your Tomba API key (ta_xxxx)    |
-| `tombaApiSecret` | `string` | Your Tomba secret key (ts_xxxx) |
-| `domains`        | `array`  | Array of domains to count       |
-
-### Optional Parameters
-
-| Parameter    | Type     | Default | Description                         |
-| ------------ | -------- | ------- | ----------------------------------- |
-| `maxResults` | `number` | `50`    | Maximum number of results to return |
-
-### Example Input
+| Field            | Required | Default | Description                                                                 |
+| ---------------- | -------- | ------- | --------------------------------------------------------------------------- |
+| `domains`        | Yes      |         | Domains to count. URLs like `https://www.stripe.com/pricing` are cleaned up |
+| `maxResults`     | No       | `50`    | Maximum number of domains to count                                          |
+| `maxConcurrency` | No       | `10`    | How many domains to process at the same time (1–50)                         |
+| `maxRetries`     | No       | `3`     | How many times to retry a temporary failure (0–10)                          |
+| `useCache`       | No       | `true`  | Reuse results from your previous runs for free                              |
+| `cacheTtlHours`  | No       | `24`    | How long cached results stay valid (`0` turns the cache off)                |
 
 ```json
 {
-    "tombaApiKey": "ta_xxxxxxxxxxxxxxxxxxxx",
-    "tombaApiSecret": "ts_xxxxxxxxxxxxxxxxxxxx",
-    "domains": ["tomba.io", "stripe.com", "google.com"],
-    "maxResults": 100
+    "domains": ["stripe.com", "shopify.com", "tomba.io"],
+    "maxResults": 500
 }
 ```
 
-### Best Practices
+## Output
 
-- **Domain Selection**: Use clean domain names without protocols (http/https)
-- **Rate Limits**: The Actor automatically handles Tomba's 150 requests/minute limit
-- **Batch Size**: Process 10-50 domains at a time for optimal performance
-
-## Output Data Structure
-
-The Actor returns comprehensive email count statistics for each domain:
-
-### Example Output
+You get one row per domain:
 
 ```json
 {
-    "domain": "tomba.io",
-    "total": 245,
-    "personalEmails": 198,
-    "genericEmails": 47,
+    "total": 1250,
+    "personal_emails": 1100,
+    "generic_emails": 150,
     "department": {
-        "engineering": 45,
-        "sales": 38,
-        "marketing": 32,
-        "hr": 15,
-        "finance": 12,
-        "legal": 8,
-        "executive": 25,
-        "support": 28,
-        "other": 42
+        "engineering": 410,
+        "finance": 35,
+        "hr": 22,
+        "it": 18,
+        "marketing": 64,
+        "operations": 51,
+        "management": 88,
+        "sales": 120,
+        "legal": 12,
+        "support": 47,
+        "communication": 9,
+        "executive": 15
     },
     "seniority": {
-        "junior": 89,
-        "senior": 125,
-        "executive": 31
+        "junior": 180,
+        "senior": 420,
+        "executive": 37
     },
-    "source": "tomba_email_count"
+    "domain": "stripe.com",
+    "source": "tomba_email_count",
+    "charged": true,
+    "cached": false
 }
 ```
 
-### Data Structure Overview
+| Field             | Description                                                                             |
+| ----------------- | --------------------------------------------------------------------------------------- |
+| `domain`          | The domain you submitted                                                                |
+| `total`           | Total number of email addresses found for the domain                                    |
+| `personal_emails` | Addresses that belong to a person, e.g. `jane.doe@`                                     |
+| `generic_emails`  | Shared addresses, e.g. `info@`, `support@`                                              |
+| `department`      | Number of addresses per department: sales, marketing, engineering, finance, HR and more |
+| `seniority`       | Number of addresses per seniority level: `junior`, `senior`, `executive`                |
+| `source`          | Always `tomba_email_count`                                                              |
+| `charged`         | `true` if this lookup was billed                                                        |
+| `cached`          | `true` if this result came from the cache (free)                                        |
+| `error`           | Why no count was returned, if applicable                                                |
 
-The output contains comprehensive email statistics organized into logical sections:
+## Pricing
 
-#### Email Count Statistics
+**$0.00312 per domain ($3.12 per 1,000).** No subscription and no Tomba account needed.
 
-- **Total Count**: Complete number of email addresses found for the domain
-- **Email Types**: Breakdown between personal and generic email addresses
-- **Quality Metrics**: Confidence levels and data freshness indicators
+You are only charged when Tomba returns a count:
 
-#### Departmental Analysis
+| What happens                                    | Charged |
+| ----------------------------------------------- | ------- |
+| A count is returned for the domain              | Yes     |
+| A count of zero is returned for the domain      | Yes     |
+| No count returned                               | No      |
+| Invalid domain or any other error               | No      |
+| Temporary failure (it is retried automatically) | No      |
+| Result served from the cache                    | No      |
 
-- **Department Breakdown**: Email counts by department
-    - Engineering, Sales, Marketing, HR, Finance
-    - Legal, Executive, Support, and Other departments
-- **Distribution Insights**: Understanding of team structure and size
+Every row shows `charged` and `cached`, so you always know what you paid for. To cap your spend, set **Maximum cost per run** in the run options: the Actor stops cleanly when the limit is reached.
 
-#### Seniority Distribution
+## Built for big lists
 
-- **Junior Level**: Entry-level and junior position email counts
-- **Senior Level**: Senior and mid-level position email counts
-- **Executive Level**: C-level and executive position email counts
+- **No rate limit**: up to 50 domains are processed at the same time
+- **Automatic retries**: temporary failures are retried for you, and never billed
+- **Resumable**: if a run is interrupted, it continues where it stopped without charging you again
+- **Cache**: repeat lookups within 24 hours are free
 
-### Key Benefits
+## Integrations
 
-- **Market Sizing**: Understand the email landscape of target companies
-- **Lead Planning**: Plan outreach campaigns based on email counts
-- **Competitive Analysis**: Compare email presence across competitors
-- **Quality Assessment**: Confidence levels ensure data reliability
-- **Strategic Insights**: Department and seniority distribution for targeting
-
-## Use Cases
-
-- **Lead Generation Planning**: Estimate potential lead volume before launching campaigns
-- **Market Research**: Analyze email presence and organizational structure of target markets
-- **Competitive Intelligence**: Compare email footprints across competitor domains
-- **Sales Planning**: Size potential markets and plan outreach strategies
-- **Data Validation**: Verify domain email capacity before major campaigns
-- **Business Intelligence**: Understand organizational structure through email distribution
-- **Campaign Optimization**: Plan department-specific or seniority-targeted campaigns
-
-## Resources & Documentation
-
-### API Documentation
-
-- [Tomba API Docs](https://tomba.io/api) - Complete API reference
-- [Authentication Guide](https://app.tomba.io/api) - Get your API keys
-- [Pricing & Limits](https://tomba.io/pricing) - Understand rate limits and costs
-- [Email Count API](https://docs.tomba.io/api/finder#email-count) - Specific endpoint documentation
+Run it on a schedule, call it from the Apify API, or connect it to Zapier, Make, Google Sheets, HubSpot, Slack and hundreds of other apps with [Apify integrations](https://docs.apify.com/platform/integrations). Webhooks let you trigger your own workflow as soon as a run finishes.
 
 ## FAQ
 
-### General Questions
+**Do I need a Tomba account or API key?**
+No. Everything is built in. You only pay the per-domain price on Apify.
 
-**Q: What does email count analysis provide?**
-A: Email count analysis tells you how many email addresses are associated with a domain, broken down by department, seniority, and other attributes. It's like getting domain email statistics without seeing actual email addresses.
+**How much does it cost?**
+$0.00312 per domain ($3.12 per 1,000). A count of zero is still an answer, so it is charged. Errors and cached lookups are free.
 
-**Q: Why would I need to count emails instead of finding them?**
-A: Email counting helps with market sizing, campaign planning, lead qualification, and understanding company structure without the cost of retrieving individual email addresses.
+**Does this give me the email addresses?**
+No. It tells you how many addresses exist and how they break down, so you can decide where to focus. To get the addresses themselves, use Tomba Domain Search.
 
-**Q: How accurate are the email counts?**
-A: Counts are based on Tomba's comprehensive database and are typically accurate within 10-20%. Large companies may have more variance due to complex email structures.
+**How many domains can I count in one run?**
+Up to 1,000 per run, processed in parallel. There is no rate limit.
 
-### Usage & Features
+**What domain format should I use?**
+Anything works: `stripe.com`, `www.stripe.com` or `https://stripe.com/pricing`. We clean it up and remove duplicates.
 
-**Q: Can I get counts for specific departments?**
-A: Yes! Results include breakdowns by department (sales, engineering, marketing, etc.), seniority levels, and job functions when available.
+**What if my run is interrupted?**
+It picks up where it stopped. Domains already counted are not charged again.
 
-**Q: What's the difference between total and verified email counts?**
-A: Total count includes all discovered emails, while verified count only includes emails that have been validated for deliverability.
-
-**Q: How many domains can I analyze at once?**
-A: You can process up to 1000 domains per run. For optimal performance, analyze 20-50 domains per batch.
-
-**Q: Do you provide historical email count data?**
-A: The current API provides point-in-time data. For trend analysis, you'd need to run periodic counts and track changes over time.
-
-### Technical Questions
-
-**Q: What are the rate limits for email counting?**
-A: The Actor automatically handles Tomba's rate limits. Email counting is typically faster than individual email discovery operations.
-
-**Q: How should I interpret zero email counts?**
-A: Zero counts might indicate new companies, very private organizations, domains with no public email presence, or domains outside Tomba's coverage area.
-
-**Q: Can I count emails for any domain?**
-A: You can analyze most business domains. Personal email providers (gmail.com, yahoo.com) won't return meaningful counts since they don't represent single organizations.
-
-**Q: What happens if a domain doesn't exist?**
-A: Invalid domains will return an error or zero count. The Actor handles these gracefully and continues processing other domains.
-
-### Business Applications
-
-**Q: How can this help with sales planning?**
-A: Email counts help estimate market size, plan outreach capacity, prioritize target companies by size, and set realistic campaign goals.
-
-**Q: Is this useful for competitive analysis?**
-A: Yes! Compare email counts across competitors to understand relative company sizes, growth patterns, and market positioning.
-
-**Q: How does this help with lead qualification?**
-A: Companies with larger email counts typically indicate bigger organizations, which might be more valuable prospects depending on your business model.
-
-**Q: Can I use this for market research?**
-A: Absolutely! Aggregate email counts across industry domains to understand market characteristics, company size distributions, and sector insights.
-
-### Data & Privacy
-
-**Q: Does email counting violate privacy?**
-A: No, email counting only provides aggregate statistics without revealing individual email addresses or personal information.
-
-**Q: Is this GDPR compliant?**
-A: Yes, email counting uses only aggregated, publicly available information and doesn't expose personal data.
-
-**Q: How often is the count data updated?**
-A: Tomba regularly updates its database. While specific update frequencies aren't guaranteed, data is generally refreshed monthly or quarterly.
-
-**Q: Can I track email count changes over time?**
-A: You can run periodic analyses to track changes. Consider storing historical results to build trend analysis for your target domains.
-
-## Keywords
-
-email count, email analytics, domain email statistics, email volume analysis, company email insights, email metrics, business intelligence, email data analysis, corporate email count, domain analysis
+**How do I limit what I spend?**
+Set **Maximum cost per run** before you start. The Actor stops as soon as the limit is reached.
 
 ## Support
 
-If you need any help, have questions, or encounter any issues while using Tomba.io, please don't hesitate to reach out to our support team. You can contact us via:
+Questions or feedback? We're happy to help:
 
 - **Email**: support@tomba.io
-- **Live chat**: Available on the Tomba.io website during business hours
-
-## Contributing
-
-We welcome contributions to improve this actor. Please feel free to submit issues, feature requests, or pull requests to help make this tool even better for the community.
+- **Live chat**: on [tomba.io](https://tomba.io) during business hours
+- **Issues**: use the **Issues** tab on this Actor's page
 
 ## About Tomba
 
-Founded in 2020, Tomba prides itself on being the most reliable, accurate, and in-depth source of email address data available anywhere. We process terabytes of data to produce our Email finder API.
+Founded in 2020, [Tomba](https://tomba.io) is a B2B data platform for finding, verifying and enriching business contacts. Our Email Finder, Domain Search and Email Verifier help sales and marketing teams reach the right people.
 
 ![Tomba Logo](https://tomba.io/logo.png)
