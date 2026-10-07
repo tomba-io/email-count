@@ -18,6 +18,9 @@ All notable changes to this project will be documented in this file. See [standa
 - Domains are normalized and deduplicated
 - Each dataset item now includes `charged` and `cached`
 - Lookups that return no data now also produce a dataset item with `error`
+- Real-time API (Apify Standby mode): `GET /?domain=…` or `POST /` with the run input returns results as JSON, with an OpenAPI web server schema
+- Key-value store schema for the default store (`INPUT`, `TOMBA_STATE`)
+- Default memory set to 256 MB
 
 ### Dependencies
 

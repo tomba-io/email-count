@@ -1,0 +1,340 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tomba Email Count API",
+        "version": "1.0.0",
+        "description": "Real-time API (Apify Standby mode). Count the email addresses Tomba knows for a domain, split by personal/generic, department and seniority. Each domain with a count (including zero) costs $0.00312; domains with no data, errors and cached results are free."
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Count email addresses for one or more domains",
+                "description": "Without query parameters, returns a short usage note (also used as the readiness probe).",
+                "parameters": [
+                    {
+                        "name": "domain",
+                        "in": "query",
+                        "description": "Domain to count email addresses for. Repeat the parameter or separate values with commas for several domains. URLs are cleaned up.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "stripe.com"
+                    },
+                    {
+                        "name": "domains",
+                        "in": "query",
+                        "description": "Alias of `domain`.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "maxResults",
+                        "in": "query",
+                        "description": "Maximum number of domain counts to return (default 50).",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "default": 50
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Results"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Count email addresses using a JSON input",
+                "description": "Accepts the same JSON input as a normal Actor run.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "domains": {
+                                        "type": "array",
+                                        "description": "Array of domain names to count email addresses for.",
+                                        "example": ["tomba.io", "example.com", "google.com"],
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "maxResults": {
+                                        "type": "integer",
+                                        "description": "Maximum number of domains to process. Default is 50.",
+                                        "minimum": 1,
+                                        "maximum": 1000,
+                                        "default": 50,
+                                        "example": 50
+                                    },
+                                    "maxConcurrency": {
+                                        "type": "integer",
+                                        "description": "How many Tomba requests run in parallel. There is no rate limit, so raise it for large lists.",
+                                        "minimum": 1,
+                                        "maximum": 50,
+                                        "default": 10
+                                    },
+                                    "maxRetries": {
+                                        "type": "integer",
+                                        "description": "How many times to retry a request after a network error, 429 or 5xx response (exponential backoff). Failed requests are never charged.",
+                                        "minimum": 0,
+                                        "maximum": 10,
+                                        "default": 3
+                                    },
+                                    "useCache": {
+                                        "type": "boolean",
+                                        "description": "Reuse results from previous runs for identical requests. Cached results are free.",
+                                        "default": true
+                                    },
+                                    "cacheTtlHours": {
+                                        "type": "integer",
+                                        "description": "How long cached results stay valid. 0 disables the cross-run cache.",
+                                        "minimum": 0,
+                                        "maximum": 720,
+                                        "default": 24
+                                    }
+                                },
+                                "required": ["domains"],
+                                "example": {
+                                    "domains": ["stripe.com", "tomba.io"]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Results"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "Results": {
+                "description": "One row per domain, in the same format as the dataset items.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "items": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EmailCount"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Error": {
+                "description": "Invalid input (400) or the run's max charge limit was reached (402).",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "EmailCount": {
+                "type": "object",
+                "properties": {
+                    "domain": {
+                        "type": "string",
+                        "description": "Domain name that was processed"
+                    },
+                    "total": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Total number of email addresses found for the domain"
+                    },
+                    "personal_emails": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Number of personal email addresses"
+                    },
+                    "generic_emails": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Number of generic email addresses (info@, support@, etc.)"
+                    },
+                    "department": {
+                        "type": "object",
+                        "nullable": true,
+                        "description": "Email count breakdown by department",
+                        "properties": {
+                            "engineering": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of engineering emails"
+                            },
+                            "finance": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of finance emails"
+                            },
+                            "hr": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of HR emails"
+                            },
+                            "it": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of IT emails"
+                            },
+                            "marketing": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of marketing emails"
+                            },
+                            "operations": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of operations emails"
+                            },
+                            "management": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of management emails"
+                            },
+                            "sales": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of sales emails"
+                            },
+                            "legal": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of legal emails"
+                            },
+                            "support": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of support emails"
+                            },
+                            "communication": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of communication emails"
+                            },
+                            "executive": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of executive emails"
+                            },
+                            "accounting": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of accounting emails"
+                            },
+                            "administrative": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of administrative emails"
+                            },
+                            "diversity": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of diversity emails"
+                            },
+                            "facilities": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of facilities emails"
+                            },
+                            "pr": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of PR/public relations emails"
+                            },
+                            "security": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of security emails"
+                            },
+                            "software": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of software emails"
+                            },
+                            "warehouse": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of warehouse emails"
+                            }
+                        }
+                    },
+                    "seniority": {
+                        "type": "object",
+                        "nullable": true,
+                        "description": "Email count breakdown by seniority level",
+                        "properties": {
+                            "junior": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of junior level emails"
+                            },
+                            "senior": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of senior level emails"
+                            },
+                            "executive": {
+                                "type": "number",
+                                "nullable": true,
+                                "description": "Number of executive level emails"
+                            }
+                        }
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Source of the count data"
+                    },
+                    "error": {
+                        "type": "string",
+                        "description": "Error message if count failed"
+                    },
+                    "charged": {
+                        "type": "boolean",
+                        "description": "Whether this request was charged (pay-per-event)"
+                    },
+                    "cached": {
+                        "type": "boolean",
+                        "description": "Whether the result came from the cache (free)"
+                    }
+                }
+            }
+        }
+    }
+}
